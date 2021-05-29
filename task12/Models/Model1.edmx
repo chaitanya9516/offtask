@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="officetask2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="dep_Id" />
+          </Key>
+          <Property Name="dep_Id" Type="int" Nullable="false" />
+          <Property Name="department" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="employees">
+          <Key>
+            <PropertyRef Name="emp_Id" />
+          </Key>
+          <Property Name="emp_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="gender" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="skills" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="salary" Type="int" Nullable="false" />
+          <Property Name="depid" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__employees__depid__07020F21">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="employees" Type="Self.employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="dep_Id" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="depid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="officetask2ModelStoreContainer">
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__employees__depid__07020F21" Association="Self.FK__employees__depid__07020F21">
+            <End Role="department" EntitySet="department" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="officetask2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="dep_Id" />
+          </Key>
+          <Property Name="dep_Id" Type="Int32" Nullable="false" />
+          <Property Name="department1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employees" Relationship="Self.FK__employees__depid__07020F21" FromRole="department" ToRole="employees" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="emp_Id" />
+          </Key>
+          <Property Name="emp_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="firstname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gender" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="skills" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salary" Type="Int32" Nullable="false" />
+          <Property Name="depid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="department" Relationship="Self.FK__employees__depid__07020F21" FromRole="employees" ToRole="department" />
+        </EntityType>
+        <Association Name="FK__employees__depid__07020F21">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="employees" Type="Self.employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="dep_Id" />
+            </Principal>
+            <Dependent Role="employees">
+              <PropertyRef Name="depid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="officetask2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="departments" EntityType="Self.department" />
+          <EntitySet Name="employees" EntityType="Self.employee" />
+          <AssociationSet Name="FK__employees__depid__07020F21" Association="Self.FK__employees__depid__07020F21">
+            <End Role="department" EntitySet="departments" />
+            <End Role="employees" EntitySet="employees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="officetask2ModelStoreContainer" CdmEntityContainer="officetask2Entities">
+          <EntitySetMapping Name="departments">
+            <EntityTypeMapping TypeName="officetask2Model.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="dep_Id" ColumnName="dep_Id" />
+                <ScalarProperty Name="department1" ColumnName="department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="officetask2Model.employee">
+              <MappingFragment StoreEntitySet="employees">
+                <ScalarProperty Name="emp_Id" ColumnName="emp_Id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="skills" ColumnName="skills" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="depid" ColumnName="depid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

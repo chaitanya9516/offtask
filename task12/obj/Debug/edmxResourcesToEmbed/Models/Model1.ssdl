@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="officetask2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="dep_Id" />
+    </Key>
+    <Property Name="dep_Id" Type="int" Nullable="false" />
+    <Property Name="department" Type="varchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="employees">
+    <Key>
+      <PropertyRef Name="emp_Id" />
+    </Key>
+    <Property Name="emp_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstname" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="lastname" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="gender" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="skills" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="salary" Type="int" Nullable="false" />
+    <Property Name="depid" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__employees__depid__07020F21">
+    <End Role="department" Type="Self.department" Multiplicity="1" />
+    <End Role="employees" Type="Self.employees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="dep_Id" />
+      </Principal>
+      <Dependent Role="employees">
+        <PropertyRef Name="depid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="officetask2ModelStoreContainer">
+    <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employees" EntityType="Self.employees" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__employees__depid__07020F21" Association="Self.FK__employees__depid__07020F21">
+      <End Role="department" EntitySet="department" />
+      <End Role="employees" EntitySet="employees" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

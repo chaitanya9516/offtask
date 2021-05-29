@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="officetask2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="department">
+    <Key>
+      <PropertyRef Name="dep_Id" />
+    </Key>
+    <Property Name="dep_Id" Type="Int32" Nullable="false" />
+    <Property Name="department1" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="employees" Relationship="Self.FK__employees__depid__07020F21" FromRole="department" ToRole="employees" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="emp_Id" />
+    </Key>
+    <Property Name="emp_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="lastname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="gender" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="skills" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="salary" Type="Int32" Nullable="false" />
+    <Property Name="depid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="department" Relationship="Self.FK__employees__depid__07020F21" FromRole="employees" ToRole="department" />
+  </EntityType>
+  <Association Name="FK__employees__depid__07020F21">
+    <End Role="department" Type="Self.department" Multiplicity="1" />
+    <End Role="employees" Type="Self.employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="department">
+        <PropertyRef Name="dep_Id" />
+      </Principal>
+      <Dependent Role="employees">
+        <PropertyRef Name="depid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="officetask2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="departments" EntityType="Self.department" />
+    <EntitySet Name="employees" EntityType="Self.employee" />
+    <AssociationSet Name="FK__employees__depid__07020F21" Association="Self.FK__employees__depid__07020F21">
+      <End Role="department" EntitySet="departments" />
+      <End Role="employees" EntitySet="employees" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
